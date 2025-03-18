@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Operaciones Básicas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        input[type="number"], input[type="text"] {
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <h1>Calculadora Básica</h1>
+
+        <div class="input-group">
+            <input type="number" id="num1" placeholder="Primer número">
+        </div>
+        <div class="input-group">
+            <input type="number" id="num2" placeholder="Segundo número">
+        </div>
+
+        <div class="buttons">
+            <button onclick="calcular('suma')">Sumar</button>
+            <button onclick="calcular('resta')">Restar</button>
+            <button onclick="calcular('multiplicacion')">Multiplicar</button>
+            <button onclick="calcular('division')">Dividir</button>
+        </div>
+
+        <h2>Calcular una expresión:</h2>
+        <input type="text" id="expresion" placeholder="Ej: 3+5*2/(1+1)">
+        <button onclick="calcularExpresion()">Calcular Expresión</button>
+
+        <div class="result" id="resultado"></div>
+    </div>
+
+    <script>
+        function calcular(operacion) {
+            // Obtener los valores de los números ingresados
+            let num1 = parseFloat(document.getElementById('num1').value);
+            let num2 = parseFloat(document.getElementById('num2').value);
+
+            // Verificar si los valores son números válidos
+            if (isNaN(num1) || isNaN(num2)) {
+                document.getElementById('resultado').innerHTML = "Por favor, ingresa ambos números.";
+                return;
+            }
+
+            // Realizar la operación según el botón presionado
+            let resultado;
+            switch (operacion) {
+                case 'suma':
+                    resultado = num1 + num2;
+                    document.getElementById('resultado').innerHTML = "Resultado: " + resultado;
+                    break;
+                case 'resta':
+                    resultado = num1 - num2;
+                    document.getElementById('resultado').innerHTML = "Resultado: " + resultado;
+                    break;
+                case 'multiplicacion':
+                    resultado = num1 * num2;
+                    document.getElementById('resultado').innerHTML = "Resultado: " + resultado;
+                    break;
+                case 'division':
+                    if (num2 === 0) {
+                        document.getElementById('resultado').innerHTML = "No se puede dividir entre cero.";
+                    } else {
+                        resultado = num1 / num2;
+                        document.getElementById('resultado').innerHTML = "Resultado: " + resultado;
+                    }
+                    break;
+                default:
+                    document.getElementById('resultado').innerHTML = "Operación no válida.";
+            }
+        }
+
+        function calcularExpresion() {
+            // Obtener la expresión matemática ingresada
+            let expresion = document.getElementById('expresion').value;
+
+            // Verificar que la expresión no esté vacía
+            if (expresion.trim() === "") {
+                document.getElementById('resultado').innerHTML = "Por favor, ingresa una expresión válida.";
+                return;
+            }
+
+            try {
+                // Usamos eval() para calcular la expresión respetando las jerarquías
+                let resultado = eval(expresion);
+                document.getElementById('resultado').innerHTML = "Resultado: " + resultado;
+            } catch (error) {
+                document.getElementById('resultado').innerHTML = "Error en la expresión. Asegúrate de ingresar una fórmula válida.";
+            }
+        }
+    </script>
+
+</body>
+</html>
